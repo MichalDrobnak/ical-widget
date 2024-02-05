@@ -6,11 +6,11 @@
     export let room: IRoomReservations;
     export let currentDate: Date;
 
-    const availability = isAvailable(currentDate, room.reservations);
+    $: availability = isAvailable(currentDate, room.reservations);
 </script>
 
 <tr>
-    <td class="border border-black p-2 bg-slate-600 text-white">{ room.roomName }</td>
+    <td class="border border-gray-500 p-2 bg-gray-200 text-gray-800">{ room.roomName }</td>
     <SlotAvailability available={ availability.currentHour } />
     <SlotAvailability available={ availability.nextHour } />
 </tr>

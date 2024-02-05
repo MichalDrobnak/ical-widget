@@ -7,18 +7,18 @@
     export let rooms: IRoomReservations[];
     export let currentDate: Date;
 
-    const currentHour = getHours(currentDate);
-    const nextHour = getHours(addHours(currentDate, 1));
-    const secondHour = getHours(addHours(currentDate, 2));
+    $: currentHour = getHours(currentDate);
+    $: nextHour = getHours(addHours(currentDate, 1));
+    $: secondHour = getHours(addHours(currentDate, 2));
 
-    const currentHourString = `${currentHour}:00 - ${nextHour}:00`;
-    const nextHourString = `${nextHour}:00 - ${secondHour}:00`;
+    $: currentHourString = `${currentHour}:00 - ${nextHour}:00`;
+    $: nextHourString = `${nextHour}:00 - ${secondHour}:00`;
 </script>
 
-<table class="h-full w-full table-fixed">
+<table class="h-full w-full table-fixed border border-slate-800">
     <thead>
         <tr>
-            <HeaderCell content="Room name" />
+            <HeaderCell content="Room" />
             <HeaderCell content={ currentHourString } />
             <HeaderCell content={ nextHourString } />
         </tr>

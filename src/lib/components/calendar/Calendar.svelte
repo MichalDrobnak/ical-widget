@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { addHours } from "date-fns";
     import { fetchIcal } from "../../utils/fetch-ical";
     import CalendarTable from "../calendar-table/calendar-table.svelte";
     import rooms from "./rooms";
 
     const roomData = Promise.all(rooms.map(fetchIcal));
-    const currentDate = new Date();
+
+    let currentDate = new Date();
 </script>
 
 <div class="h-full w-full">
