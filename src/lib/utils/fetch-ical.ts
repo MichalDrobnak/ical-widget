@@ -63,7 +63,7 @@ const readStream = async (response: Response): Promise<string | null> => {
     chunks.push(decoder.decode(value));
   }
 
-  return chunks.join();
+  return chunks.join("");
 };
 
 const parseIcal = (data: string | null): IRoomReservations => {
