@@ -26,10 +26,6 @@ const isFreeInInterval = (
       resInterval
     );
 
-    if (areOverlapping && reservation.summary === "3D digitalizace") {
-      // console.log("Overlapping reservation", resInterval, checkedInterval);
-    }
-
     return !areOverlapping;
   });
 };

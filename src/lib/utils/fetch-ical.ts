@@ -97,19 +97,21 @@ const getRoomReservations = (
   return events.map((event) => {
     const start = event.getFirstPropertyValue<Time>(RESERVATION_START);
     const end = event.getFirstPropertyValue<Time>(RESERVATION_END);
-    start.zone = timezone;
-    end.zone = timezone;
-
     const summary = event.getFirstPropertyValue<string>(SUMMARY);
     const uid = event.getFirstPropertyValue<string>(UID);
 
     return {
       id: uid,
       summary: summary,
-      start: start.toJSDate(),
-      end: end.toJSDate(),
-    };
+      start: getDateWithTimezone(start, timezone),
+      end: getDateWithTimezone(end, timezone),
+    } as IReservation;
   });
+};
+
+const getDateWithTimezone = (time: Time, timezone: ical.Timezone): Date => {
+  time.zone = timezone;
+  return time.toJSDate();
 };
 
 const parseRoomName = (prodid: string): string => {

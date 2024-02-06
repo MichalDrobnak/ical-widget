@@ -5,7 +5,7 @@
     import LoadingSpinner from "../loading-spinner/Loading-spinner.svelte";
 
     const roomData = Promise.all(rooms.map((room) => fetchIcal(room)));
-    let currentDate = new Date("2024-02-06T12:00:00+01:00");
+    let currentDate = new Date("2024-02-06T14:00:00+01:00");
 </script>
 
 <div class="h-full w-full flex items-center justify-center">
