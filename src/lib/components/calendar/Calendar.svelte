@@ -1,8 +1,8 @@
 <script lang="ts">
     import { fetchIcal } from "../../utils/fetch-ical";
-    import CalendarTable from "../calendar-table/calendar-table.svelte";
+    import CalendarTable from "../calendar-table/Calendar-table.svelte";
     import rooms from "./rooms";
-    import LoadingSpinner from "../loading-spinner/loading-spinner.svelte";
+    import LoadingSpinner from "../loading-spinner/Loading-spinner.svelte";
 
     const roomData = Promise.all(rooms.map((room) => fetchIcal(room)));
     let currentDate = new Date();

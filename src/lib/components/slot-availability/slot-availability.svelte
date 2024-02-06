@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Block from './Block.svelte';
-    import Check from './Check.svelte';
+    import Block from '/src/assets/Block.svelte';
+    import Check from '/src/assets/Check.svelte';
 
     export let available: boolean;
 

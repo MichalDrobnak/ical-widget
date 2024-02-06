@@ -1,8 +1,8 @@
 <script lang="ts">
   import { addHours, getHours } from "date-fns";
     import type { IRoomReservations } from "../../models/interfaces";
-    import RoomAvailability from "../room-availability/room-availability.svelte";
-  import HeaderCell from "../header-cell/header-cell.svelte";
+    import RoomAvailability from "../room-availability/Room-availability.svelte";
+  import HeaderCell from "../header-cell/Header-cell.svelte";
 
     export let rooms: IRoomReservations[];
     export let currentDate: Date;
