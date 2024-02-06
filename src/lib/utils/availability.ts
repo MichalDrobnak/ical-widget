@@ -1,10 +1,10 @@
 import {
   endOfHour,
-  interval,
   startOfHour,
   type Interval,
   addHours,
   areIntervalsOverlapping,
+  interval,
 } from "date-fns";
 import type { IAvailability, IReservation } from "../models/interfaces";
 
@@ -21,7 +21,16 @@ const isFreeInInterval = (
 ): boolean => {
   return reservations.every((reservation) => {
     const resInterval = interval(reservation.start, reservation.end);
-    return !areIntervalsOverlapping(checkedInterval, resInterval);
+    const areOverlapping = areIntervalsOverlapping(
+      checkedInterval,
+      resInterval
+    );
+
+    if (areOverlapping && reservation.summary === "3D digitalizace") {
+      // console.log("Overlapping reservation", resInterval, checkedInterval);
+    }
+
+    return !areOverlapping;
   });
 };
 

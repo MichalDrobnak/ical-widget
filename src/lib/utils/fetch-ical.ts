@@ -1,12 +1,18 @@
-import ical from "ical";
 import type { IReservation, IRoomReservations } from "../models/interfaces";
-import { parse } from "date-fns";
+import ical, { Component, Time } from "ical.js";
 
 const ICAL_URL = "/meeting-room-ics";
-const ROOM_NAME_REGEX = /PRODID:-\/\/.*\/\/([^\/]+)\/\/.*/;
-const RESERVATION_TYPE = "VEVENT";
 const REFETCH_DELAY_MS = 1000;
 const MAX_RETRIES = 5;
+const ROOM_NAME_REGEX = /-\/\/.*\/\/([^\/]+)\/\/.*/;
+
+const RESERVATION_TYPE = "vevent";
+const RESERVATION_START = "dtstart";
+const RESERVATION_END = "dtend";
+const SUMMARY = "summary";
+const UID = "uid";
+const ROOM_NAME = "prodid";
+const TIMEZONE = "vtimezone";
 
 export const fetchIcal = async (
   roomId: string,
@@ -62,10 +68,15 @@ const readStream = async (response: Response): Promise<string | null> => {
 
 const parseIcal = (data: string | null): IRoomReservations => {
   if (data) {
-    const parsed = ical.parseICS(data);
-    const roomName = getRoomName(data);
+    const parsed = ical.parse(data);
+    const icalComponent = new Component(parsed);
+    const vtimezone = icalComponent.getFirstSubcomponent(TIMEZONE);
+    const timezone = new ical.Timezone(vtimezone!);
 
-    const reservations = getRoomReservations(parsed);
+    const prodId = icalComponent.getFirstPropertyValue<string>(ROOM_NAME);
+    const roomName = parseRoomName(prodId);
+    const reservations = getRoomReservations(icalComponent, timezone);
+
     return {
       roomName,
       reservations,
@@ -77,35 +88,31 @@ const parseIcal = (data: string | null): IRoomReservations => {
   };
 };
 
-const getRoomReservations = (ical: ical.FullCalendar): IReservation[] => {
-  return Object.values(ical)
-    .filter(
-      (event) => event.type === RESERVATION_TYPE && event.start && event.end
-    )
-    .map((event) => {
-      if (typeof event.start === "string") {
-        event.start = parseDateWithInvalidComma(event.start);
-      }
-      if (typeof event.end === "string") {
-        event.end = parseDateWithInvalidComma(event.end);
-      }
+const getRoomReservations = (
+  icalComponent: Component,
+  timezone: ical.Timezone
+): IReservation[] => {
+  const events = icalComponent.getAllSubcomponents(RESERVATION_TYPE);
 
-      return {
-        id: event.uid,
-        summary: event.summary,
-        start: event.start!,
-        end: event.end!,
-      };
-    });
+  return events.map((event) => {
+    const start = event.getFirstPropertyValue<Time>(RESERVATION_START);
+    const end = event.getFirstPropertyValue<Time>(RESERVATION_END);
+    start.zone = timezone;
+    end.zone = timezone;
+
+    const summary = event.getFirstPropertyValue<string>(SUMMARY);
+    const uid = event.getFirstPropertyValue<string>(UID);
+
+    return {
+      id: uid,
+      summary: summary,
+      start: start.toJSDate(),
+      end: end.toJSDate(),
+    };
+  });
 };
 
-const parseDateWithInvalidComma = (date: string): Date => {
-  const sanitized = date.replace(/,/g, "");
-  const parsed = parse(sanitized, "yyyyMMdd'T'HHmmss", new Date());
-  return parsed;
-};
-
-const getRoomName = (data: string): string => {
-  const name = data.match(ROOM_NAME_REGEX);
+const parseRoomName = (prodid: string): string => {
+  const name = prodid.match(ROOM_NAME_REGEX);
   return name ? name[1] : "";
 };
