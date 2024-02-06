@@ -3,9 +3,23 @@
     import CalendarTable from "../calendar-table/Calendar-table.svelte";
     import rooms from "./rooms";
     import LoadingSpinner from "../loading-spinner/Loading-spinner.svelte";
+  import { getHours } from "date-fns";
 
+    const minuteInterval = 1000 * 60;
     const roomData = Promise.all(rooms.map((room) => fetchIcal(room)));
-    let currentDate = new Date("2024-02-06T14:00:00+01:00");
+
+    let currentDate = new Date();
+    let currentHour = getHours(currentDate);
+
+    setTimeout(() => {
+        const newDate = new Date();
+        const newHour = getHours(newDate);
+
+        if (newHour !== currentHour) {
+            currentDate = newDate;
+            currentHour = newHour;
+        }
+    }, minuteInterval);
 </script>
 
 <div class="h-full w-full flex items-center justify-center">
