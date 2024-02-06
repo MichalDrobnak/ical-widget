@@ -4,9 +4,9 @@
 
     export let available: boolean;
 
-    let icon = available ? Check : Block;
+    $: icon = available ? Check : Block;
 
-    let colorClass = available
+    $: colorClass = available
         ? "bg-green-400 border-green-600"
         : "bg-red-400 border-red-600";
 </script>

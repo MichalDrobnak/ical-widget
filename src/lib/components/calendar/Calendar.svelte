@@ -2,10 +2,9 @@
     import { fetchIcal } from "../../utils/fetch-ical";
     import CalendarTable from "../calendar-table/calendar-table.svelte";
     import rooms from "./rooms";
-  import LoadingSpinner from "../loading-spinner/loading-spinner.svelte";
+    import LoadingSpinner from "../loading-spinner/loading-spinner.svelte";
 
-    const roomData = Promise.all(rooms.map(fetchIcal));
-
+    const roomData = Promise.all(rooms.map((room) => fetchIcal(room)));
     let currentDate = new Date();
 </script>
 

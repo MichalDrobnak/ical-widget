@@ -19,8 +19,6 @@ const isFreeInInterval = (
   checkedInterval: Interval,
   reservations: IReservation[]
 ): boolean => {
-  // console.log(reservations);
-
   return reservations.every((reservation) => {
     const resInterval = interval(reservation.start, reservation.end);
     return !areIntervalsOverlapping(checkedInterval, resInterval);
