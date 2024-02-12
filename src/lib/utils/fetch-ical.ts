@@ -4,7 +4,7 @@ import ical, { Component, Time } from 'ical.js';
 const ICAL_URL = '/meeting-room-ics';
 const REFETCH_DELAY_MS = 1000;
 const MAX_RETRIES = 5;
-const ROOM_NAME_REGEX = /-\/\/.*\/\/([^\/]+)\/\/.*/;
+const ROOM_NAME_REGEX = /-\/\/.*\/\/([^/]+)\/\/.*/;
 
 const RESERVATION_TYPE = 'vevent';
 const RESERVATION_START = 'dtstart';
@@ -54,12 +54,11 @@ const readStream = async (response: Response): Promise<string | null> => {
   const reader = body.getReader();
   const decoder = new TextDecoder('utf-8');
   const chunks = [];
+  let doneReading = false;
 
-  while (true) {
+  while (!doneReading) {
     const { done, value } = await reader.read();
-    if (done) {
-      break;
-    }
+    doneReading = done;
     chunks.push(decoder.decode(value));
   }
 
