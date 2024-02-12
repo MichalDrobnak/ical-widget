@@ -1,25 +1,25 @@
-import type { IReservation, IRoomReservations } from "../models/interfaces";
-import ical, { Component, Time } from "ical.js";
+import type { IReservation, IRoomReservations } from '../models/interfaces';
+import ical, { Component, Time } from 'ical.js';
 
-const ICAL_URL = "/meeting-room-ics";
+const ICAL_URL = '/meeting-room-ics';
 const REFETCH_DELAY_MS = 1000;
 const MAX_RETRIES = 5;
 const ROOM_NAME_REGEX = /-\/\/.*\/\/([^\/]+)\/\/.*/;
 
-const RESERVATION_TYPE = "vevent";
-const RESERVATION_START = "dtstart";
-const RESERVATION_END = "dtend";
-const SUMMARY = "summary";
-const UID = "uid";
-const ROOM_NAME = "prodid";
-const TIMEZONE = "vtimezone";
+const RESERVATION_TYPE = 'vevent';
+const RESERVATION_START = 'dtstart';
+const RESERVATION_END = 'dtend';
+const SUMMARY = 'summary';
+const UID = 'uid';
+const ROOM_NAME = 'prodid';
+const TIMEZONE = 'vtimezone';
 
 export const fetchIcal = async (
   roomId: string,
-  retry = 0
+  retry = 0,
 ): Promise<IRoomReservations> => {
   if (retry > MAX_RETRIES) {
-    throw new Error("Max retries reached");
+    throw new Error('Max retries reached');
   }
 
   const response = await fetchRoomData(roomId);
@@ -30,16 +30,16 @@ export const fetchIcal = async (
     return reservations;
   } catch (error) {
     return new Promise((resolve) => setTimeout(resolve, REFETCH_DELAY_MS)).then(
-      () => fetchIcal(roomId, retry + 1)
+      () => fetchIcal(roomId, retry + 1),
     );
   }
 };
 
 const fetchRoomData = async (roomId: string): Promise<Response> => {
-  const headers = new Headers([["Content-Type", "text/calendar"]]);
+  const headers = new Headers([['Content-Type', 'text/calendar']]);
 
   return fetch(`${ICAL_URL}/${roomId}`, {
-    method: "GET",
+    method: 'GET',
     headers,
   });
 };
@@ -52,7 +52,7 @@ const readStream = async (response: Response): Promise<string | null> => {
   }
 
   const reader = body.getReader();
-  const decoder = new TextDecoder("utf-8");
+  const decoder = new TextDecoder('utf-8');
   const chunks = [];
 
   while (true) {
@@ -63,7 +63,7 @@ const readStream = async (response: Response): Promise<string | null> => {
     chunks.push(decoder.decode(value));
   }
 
-  return chunks.join("");
+  return chunks.join('');
 };
 
 const parseIcal = (data: string | null): IRoomReservations => {
@@ -90,7 +90,7 @@ const parseIcal = (data: string | null): IRoomReservations => {
 
 const getRoomReservations = (
   icalComponent: Component,
-  timezone: ical.Timezone
+  timezone: ical.Timezone,
 ): IReservation[] => {
   const events = icalComponent.getAllSubcomponents(RESERVATION_TYPE);
 
@@ -116,5 +116,5 @@ const getDateWithTimezone = (time: Time, timezone: ical.Timezone): Date => {
 
 const parseRoomName = (prodid: string): string => {
   const name = prodid.match(ROOM_NAME_REGEX);
-  return name ? name[1] : "";
+  return name ? name[1] : '';
 };

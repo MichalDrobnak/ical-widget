@@ -4,7 +4,7 @@
 // Disable some style eslint rules for things we can't control
 /* eslint-disable @typescript-eslint/camelcase, @typescript-eslint/class-name-casing */
 
-declare module "ical.js" {
+declare module 'ical.js' {
   function parse(input: string): any[];
 
   export class helpers {
@@ -31,14 +31,14 @@ declare module "ical.js" {
     public addProperty(property: Property): Property;
     public addPropertyWithValue(
       name: string,
-      value: string | number | object
+      value: string | number | object,
     ): Property;
 
     public hasProperty(name?: string): boolean;
 
     public updatePropertyWithValue(
       name: string,
-      value: string | number | object
+      value: string | number | object,
     ): Property;
 
     public removeAllProperties(name?: string): boolean;
@@ -62,7 +62,7 @@ declare module "ical.js" {
       options?: {
         strictExceptions: boolean;
         exepctions: Array<Component | Event>;
-      }
+      },
     );
 
     public isRecurring(): boolean;
@@ -123,7 +123,7 @@ declare module "ical.js" {
       aExtraHours: number,
       aExtraMinutes: number,
       aExtraSeconds: number,
-      aTimeopt?: Time
+      aTimeopt?: Time,
     ): void;
 
     public addDuration(aDuration: Duration): void;
@@ -132,7 +132,7 @@ declare module "ical.js" {
     public toUnixTime(): number;
     public toJSDate(): Date;
     public toJSON(): TimeJsonData;
-    public get icaltype(): "date" | "date-time";
+    public get icaltype(): 'date' | 'date-time';
   }
 
   export class Duration {
@@ -160,7 +160,7 @@ declare module "ical.js" {
     public static convert_time(
       tt: Time,
       fromZone: Timezone,
-      toZone: Timezone
+      toZone: Timezone,
     ): Time;
 
     public tzid: string;
@@ -176,7 +176,7 @@ declare module "ical.js" {
             tznames?: string;
             latitude?: number;
             longitude?: number;
-          }
+          },
     );
   }
 
@@ -188,13 +188,13 @@ declare module "ical.js" {
   }
 
   export type FrequencyValues =
-    | "YEARLY"
-    | "MONTHLY"
-    | "WEEKLY"
-    | "DAILY"
-    | "HOURLY"
-    | "MINUTELY"
-    | "SECONDLY";
+    | 'YEARLY'
+    | 'MONTHLY'
+    | 'WEEKLY'
+    | 'DAILY'
+    | 'HOURLY'
+    | 'MINUTELY'
+    | 'SECONDLY';
 
   export enum WeekDay {
     SU = 1,
@@ -234,7 +234,7 @@ declare module "ical.js" {
     public count: number | null;
 
     public clone(): Recur;
-    public toJSON(): Omit<RecurData, "until"> & { until?: string };
+    public toJSON(): Omit<RecurData, 'until'> & { until?: string };
     public iterator(startTime?: Time): RecurIterator;
     public isByCount(): boolean;
   }

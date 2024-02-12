@@ -1,4 +1,4 @@
-import type { IReservation } from "./reservation";
+import type { IReservation } from './reservation';
 
 export interface IRoomReservations {
   roomName?: string;

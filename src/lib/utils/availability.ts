@@ -5,8 +5,8 @@ import {
   addHours,
   areIntervalsOverlapping,
   interval,
-} from "date-fns";
-import type { IAvailability, IReservation } from "../models/interfaces";
+} from 'date-fns';
+import type { IAvailability, IReservation } from '../models/interfaces';
 
 const getHourInterval = (date: Date): Interval => {
   const hourStart = startOfHour(date);
@@ -17,13 +17,13 @@ const getHourInterval = (date: Date): Interval => {
 
 const isFreeInInterval = (
   checkedInterval: Interval,
-  reservations: IReservation[]
+  reservations: IReservation[],
 ): boolean => {
   return reservations.every((reservation) => {
     const resInterval = interval(reservation.start, reservation.end);
     const areOverlapping = areIntervalsOverlapping(
       checkedInterval,
-      resInterval
+      resInterval,
     );
 
     return !areOverlapping;
@@ -32,7 +32,7 @@ const isFreeInInterval = (
 
 export const isAvailable = (
   date: Date,
-  availability: IReservation[]
+  availability: IReservation[],
 ): IAvailability => {
   const currentHourInterval = getHourInterval(date);
   const nextHourInterval = getHourInterval(addHours(date, 1));
