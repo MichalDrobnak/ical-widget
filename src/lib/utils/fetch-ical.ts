@@ -1,23 +1,21 @@
-import type { IReservation, IRoomReservations } from '../models/interfaces';
+import type { IReservation } from '../models/interfaces';
 import ical, { Component, Time } from 'ical.js';
 
 const ICAL_URL = '/meeting-room-ics';
 const REFETCH_DELAY_MS = 1000;
 const MAX_RETRIES = 5;
-const ROOM_NAME_REGEX = /-\/\/.*\/\/([^/]+)\/\/.*/;
 
 const RESERVATION_TYPE = 'vevent';
 const RESERVATION_START = 'dtstart';
 const RESERVATION_END = 'dtend';
 const SUMMARY = 'summary';
 const UID = 'uid';
-const ROOM_NAME = 'prodid';
 const TIMEZONE = 'vtimezone';
 
 export const fetchIcal = async (
   roomId: string,
   retry = 0,
-): Promise<IRoomReservations> => {
+): Promise<IReservation[]> => {
   if (retry > MAX_RETRIES) {
     throw new Error('Max retries reached');
   }
@@ -65,26 +63,18 @@ const readStream = async (response: Response): Promise<string | null> => {
   return chunks.join('');
 };
 
-const parseIcal = (data: string | null): IRoomReservations => {
+const parseIcal = (data: string | null): IReservation[] => {
   if (data) {
     const parsed = ical.parse(data);
     const icalComponent = new Component(parsed);
     const vtimezone = icalComponent.getFirstSubcomponent(TIMEZONE);
     const timezone = new ical.Timezone(vtimezone!);
-
-    const prodId = icalComponent.getFirstPropertyValue<string>(ROOM_NAME);
-    const roomName = parseRoomName(prodId);
     const reservations = getRoomReservations(icalComponent, timezone);
 
-    return {
-      roomName,
-      reservations,
-    };
+    return reservations;
   }
 
-  return {
-    reservations: [],
-  };
+  return [];
 };
 
 const getRoomReservations = (
@@ -111,9 +101,4 @@ const getRoomReservations = (
 const getDateWithTimezone = (time: Time, timezone: ical.Timezone): Date => {
   time.zone = timezone;
   return time.toJSDate();
-};
-
-const parseRoomName = (prodid: string): string => {
-  const name = prodid.match(ROOM_NAME_REGEX);
-  return name ? name[1] : '';
 };

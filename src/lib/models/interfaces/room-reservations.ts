@@ -1,6 +1,6 @@
 import type { IReservation } from './reservation';
+import type { IRoom } from './room';
 
-export interface IRoomReservations {
-  roomName?: string;
+export interface IRoomReservations extends IRoom {
   reservations: IReservation[];
 }

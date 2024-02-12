@@ -8,8 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "prettier:check": "prettier --check .",
-    "prettier:write": "prettier --write .",
+    "tailwind": "npx tailwindcss -i ./src/app.css -o ./src/output.css --watch",
+    "prettier:check": "prettier --check src",
+    "prettier:write": "prettier --write src",
     "eslint:check": "eslint src --ext .ts,.svelte",
     "eslint:write": "eslint src --ext .ts,.svelte --fix"
   },

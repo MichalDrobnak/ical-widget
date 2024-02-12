@@ -18,7 +18,10 @@
 <table class="h-full w-full table-fixed border border-slate-800">
   <thead>
     <tr>
-      <HeaderCell content="Room" />
+      <HeaderCell content="CESNET Meeting Rooms Occupancy" colspan={3} />
+    </tr>
+    <tr>
+      <HeaderCell content="Room name" />
       <HeaderCell content={currentHourString} />
       <HeaderCell content={nextHourString} />
     </tr>

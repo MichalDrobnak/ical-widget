@@ -10,9 +10,16 @@
 </script>
 
 <tr>
-  <td class="border border-gray-500 p-2 bg-gray-200 text-gray-800"
-    >{room.roomName}</td
-  >
+  <td class="border border-gray-500 bg-slate-50 text-gray-800">
+    <div class="h-full w-full flex items-center p-2">
+      <div
+        style:background={room.color}
+        class="h-5 w-5 rounded-full border border-slate-600">
+      </div>
+      <p class="px-3 flex-1">{room.name}</p>
+    </div>
+  </td>
+
   <SlotAvailability available={availability.currentHour} />
   <SlotAvailability available={availability.nextHour} />
 </tr>

@@ -4,9 +4,16 @@
   import rooms from './rooms';
   import LoadingSpinner from '../loading-spinner/Loading-spinner.svelte';
   import { getHours } from 'date-fns';
+  import type { IRoomReservations } from '../../models/interfaces';
 
   const minuteInterval = 1000 * 60;
-  const roomData = Promise.all(rooms.map((room) => fetchIcal(room)));
+  const roomData: Promise<IRoomReservations[]> = Promise.all(
+    rooms.map((room) =>
+      fetchIcal(room.hash).then(
+        (reservations): IRoomReservations => ({ ...room, reservations }),
+      ),
+    ),
+  );
 
   let currentDate = new Date();
   let currentHour = getHours(currentDate);
