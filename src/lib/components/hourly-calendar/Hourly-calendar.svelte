@@ -1,11 +1,11 @@
 <script lang="ts">
   import { addHours, getHours } from 'date-fns';
   import type { IRoomReservations } from '../../models/interfaces';
-  import RoomAvailability from '../room-availability/Room-availability.svelte';
+  import HourlyAvailability from './Hourly-availability.svelte';
   import HeaderCell from '../header-cell/Header-cell.svelte';
 
-  export let rooms: IRoomReservations[];
-  export let currentDate: Date;
+  export let currentDate = new Date();
+  export let roomReservations: IRoomReservations[] = [];
 
   $: currentHour = getHours(currentDate);
   $: nextHour = getHours(addHours(currentDate, 1));
@@ -28,8 +28,8 @@
   </thead>
 
   <tbody>
-    {#each rooms as room}
-      <RoomAvailability {room} {currentDate} />
+    {#each roomReservations as room}
+      <HourlyAvailability {room} {currentDate} />
     {/each}
   </tbody>
 </table>

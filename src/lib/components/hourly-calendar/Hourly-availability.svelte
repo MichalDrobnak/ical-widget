@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { IRoomReservations } from '../../models/interfaces';
-  import { isAvailable } from '../../utils/availability';
+  import { getHourlyAvailability } from '../../utils/availability';
   import SlotAvailability from '../slot-availability/Slot-availability.svelte';
 
   export let room: IRoomReservations;
   export let currentDate: Date;
 
-  $: availability = isAvailable(currentDate, room.reservations);
+  $: availability = getHourlyAvailability(currentDate, room.reservations);
 </script>
 
 <tr>
