@@ -1,5 +1,5 @@
 <script lang="ts">
-  import HourlyCalendar from '../hourly-calendar/Hourly-calendar.svelte';
+  import HourlyCalendar from '../hourly-calendar/HourlyCalendar.svelte';
   import { ROOMS } from '../../constants/rooms';
   import WeeklyCalendar from '../weekly-calendar/WeeklyCalendar.svelte';
   import {
@@ -8,7 +8,7 @@
   } from '../../constants/intervals';
   import type { IRoomReservations } from '../../models/interfaces';
   import { fetchRoom, fetchRooms } from '../../utils';
-  import LoadingSpinner from '../loading-spinner/Loading-spinner.svelte';
+  import LoadingSpinner from '../loading-spinner/LoadingSpinner.svelte';
 
   const urlParams = new URLSearchParams(window.location.search);
   const roomQuery = urlParams.get('room');

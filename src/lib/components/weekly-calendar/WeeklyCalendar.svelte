@@ -2,7 +2,7 @@
   import { addDays, startOfWeek } from 'date-fns';
   import { DAYS_OF_WEEK } from '../../constants/days-of-week';
   import type { IDay, IRoomReservations } from '../../models/interfaces';
-  import HeaderCell from '../header-cell/Header-cell.svelte';
+  import HeaderCell from '../header-cell/HeaderCell.svelte';
   import DailyAvailability from './DailyAvailability.svelte';
   import { HOURS } from '../../constants';
 

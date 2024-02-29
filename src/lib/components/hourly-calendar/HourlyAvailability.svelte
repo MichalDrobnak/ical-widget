@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { IRoomReservations } from '../../models/interfaces';
   import { getHourlyAvailability } from '../../utils/availability';
-  import SlotAvailability from '../slot-availability/Slot-availability.svelte';
+  import SlotAvailability from '../slot-availability/SlotAvailability.svelte';
 
   export let room: IRoomReservations;
   export let currentDate: Date;
