@@ -1,4 +1,8 @@
-import type { IReservation } from '../models/interfaces';
+import type {
+  IReservation,
+  IRoom,
+  IRoomReservations,
+} from '../models/interfaces';
 import ical, { Component, Time } from 'ical.js';
 
 const ICAL_URL = '/meeting-room-ics';
@@ -31,6 +35,16 @@ export const fetchIcal = async (
       () => fetchIcal(roomId, retry + 1),
     );
   }
+};
+
+export const fetchRooms = async (rooms: IRoom[]) => {
+  return Promise.all(
+    rooms.map((room) =>
+      fetchIcal(room.hash).then(
+        (reservations): IRoomReservations => ({ ...room, reservations }),
+      ),
+    ),
+  );
 };
 
 const fetchRoomData = async (roomId: string): Promise<Response> => {
