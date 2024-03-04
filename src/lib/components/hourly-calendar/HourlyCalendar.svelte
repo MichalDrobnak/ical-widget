@@ -18,14 +18,13 @@
 <table class="h-full w-full table-fixed border border-slate-800">
   <thead>
     <tr>
-      <HeaderCell
-        content="Obsazení zasedacích místností v Telehouse"
-        colspan={3} />
+      <HeaderCell colspan={3}
+        >Obsazení zasedacích místností v Telehouse</HeaderCell>
     </tr>
     <tr>
-      <HeaderCell content="Místnost" />
-      <HeaderCell content={currentHourString} />
-      <HeaderCell content={nextHourString} />
+      <HeaderCell>Místnost</HeaderCell>
+      <HeaderCell>{currentHourString}</HeaderCell>
+      <HeaderCell>{nextHourString}</HeaderCell>
     </tr>
   </thead>
 

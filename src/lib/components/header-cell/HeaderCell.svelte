@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let content: string;
   export let colspan = 1;
   export let align: 'left' | 'center' | 'right' = 'center';
 
@@ -14,4 +13,6 @@
   $: classes = `${baseClasses} ${alignClass}`;
 </script>
 
-<th class={classes} {colspan}>{content}</th>
+<th class={classes} {colspan}>
+  <slot />
+</th>

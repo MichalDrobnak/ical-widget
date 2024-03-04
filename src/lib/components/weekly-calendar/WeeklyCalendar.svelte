@@ -31,12 +31,17 @@
 <table class="h-full w-full table-fixed border border-slate-800">
   <thead>
     <tr>
-      <HeaderCell content={roomReservations.name} colspan={14} />
+      <HeaderCell colspan={14}>
+        <div class="flex justify-center items-center gap-4">
+          <img src="qr.png" alt="CESNET Meetings QR" width="70" height="70" />
+          <span>{roomReservations.name}</span>
+        </div>
+      </HeaderCell>
     </tr>
     <tr>
-      <HeaderCell content="Den" align="left" />
+      <HeaderCell align="left">Den</HeaderCell>
       {#each HOURS as hour}
-        <HeaderCell content={formatHour(hour)} align="left" />
+        <HeaderCell align="left">{formatHour(hour)}</HeaderCell>
       {/each}
     </tr>
   </thead>
