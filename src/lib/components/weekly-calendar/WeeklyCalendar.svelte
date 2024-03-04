@@ -34,7 +34,7 @@
       <HeaderCell content={roomReservations.name} colspan={14} />
     </tr>
     <tr>
-      <HeaderCell content="Day" align="left" />
+      <HeaderCell content="Den" align="left" />
       {#each HOURS as hour}
         <HeaderCell content={formatHour(hour)} align="left" />
       {/each}

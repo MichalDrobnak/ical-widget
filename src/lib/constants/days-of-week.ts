@@ -1,9 +1,9 @@
 export const DAYS_OF_WEEK = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
+  'Pondělí',
+  'Úterý',
+  'Středa',
+  'Čtvrtek',
+  'Pátek',
+  'Sobota',
+  'Neděle',
 ];
