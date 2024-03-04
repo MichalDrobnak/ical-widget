@@ -7,3 +7,4 @@ export const DAYS_OF_WEEK = [
   'Sobota',
   'Neděle',
 ];
+export const DAY_OF_WEEK_FORMAT = 'd. M.';
