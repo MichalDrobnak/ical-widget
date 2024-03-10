@@ -16,7 +16,7 @@ const SUMMARY = 'summary';
 const UID = 'uid';
 const TIMEZONE = 'vtimezone';
 
-export const fetchIcal = async (
+const fetchIcal = async (
   roomId: string,
   retry = 0,
 ): Promise<IReservation[]> => {
@@ -37,14 +37,15 @@ export const fetchIcal = async (
   }
 };
 
-export const fetchRooms = async (rooms: IRoom[]) => {
-  return Promise.all(
-    rooms.map((room) =>
-      fetchIcal(room.hash).then(
-        (reservations): IRoomReservations => ({ ...room, reservations }),
-      ),
-    ),
-  );
+export const fetchRoom = async (room: IRoom): Promise<IRoomReservations> => {
+  const reservations = await fetchIcal(room.hash);
+  return { ...room, reservations };
+};
+
+export const fetchRooms = async (
+  rooms: IRoom[],
+): Promise<IRoomReservations[]> => {
+  return Promise.all(rooms.map(fetchRoom));
 };
 
 const fetchRoomData = async (roomId: string): Promise<Response> => {

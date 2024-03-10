@@ -1,6 +1,6 @@
-import type { IRoom } from '../../models/interfaces/room';
+import type { IRoom } from '../models/interfaces/room';
 
-export default [
+export const ROOMS = [
   { hash: '3j3ptaKr', name: 'TLH B5.18 Zelená ', color: '#33CC4C' },
   { hash: 'iB1atNqt', name: 'TLH B5.06 Červená', color: '#FF6655' },
   { hash: '12ZK36L7', name: 'TLH C5.37 Modrá velká', color: '#5599FF' },

@@ -1,4 +1,4 @@
-export interface IAvailability {
+export interface IHourlyAvailability {
   currentHour: boolean;
   nextHour: boolean;
 }
