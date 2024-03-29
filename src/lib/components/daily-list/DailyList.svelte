@@ -28,34 +28,39 @@
   ): IReservation[] => {
     const interval: Interval = { start: startOfDay(date), end: endOfDay(date) };
 
-    return reservations.reservations.filter((r) => {
-      const reservationInterval: Interval = { start: r.start, end: r.end };
-      return areIntervalsOverlapping(interval, reservationInterval);
-    });
+    return reservations.reservations
+      .filter((r) => {
+        const reservationInterval: Interval = { start: r.start, end: r.end };
+        return areIntervalsOverlapping(interval, reservationInterval);
+      })
+      .sort((a, b) => a.start.getTime() - b.start.getTime());
   };
 </script>
 
-<table class="h-full w-full table-fixed border border-slate-800">
-  <thead>
-    <tr>
-      <HeaderCell align="left" colspan={2}>{roomReservations.name}</HeaderCell>
-      <HeaderCell align="right" colspan={1}
-        >{formatDate(currentDate)}</HeaderCell>
-    </tr>
-    <tr>
-      <HeaderCell>Začátek</HeaderCell>
-      <HeaderCell>Konec</HeaderCell>
-      <HeaderCell>Popis</HeaderCell>
-    </tr>
-  </thead>
-
-  <tbody>
-    {#each reservations as reservation}
-      <DailyRow {reservation}></DailyRow>
-    {:else}
+<div class="h-full w-full">
+  <table class="w-full table-fixed border border-slate-800">
+    <thead>
       <tr>
-        <td colspan="3" class="text-center">Žádné rezervace</td>
+        <HeaderCell align="left" colspan={2}
+          >{roomReservations.name}</HeaderCell>
+        <HeaderCell align="right" colspan={1}
+          >{formatDate(currentDate)}</HeaderCell>
       </tr>
-    {/each}
-  </tbody>
-</table>
+      <tr>
+        <HeaderCell>Začátek</HeaderCell>
+        <HeaderCell>Konec</HeaderCell>
+        <HeaderCell>Popis</HeaderCell>
+      </tr>
+    </thead>
+
+    <tbody>
+      {#each reservations as reservation}
+        <DailyRow {reservation}></DailyRow>
+      {:else}
+        <tr>
+          <td colspan="3" class="text-center">Žádné rezervace</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>
