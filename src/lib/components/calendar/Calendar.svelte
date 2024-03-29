@@ -3,15 +3,12 @@
   import { ROOMS } from '../../constants/rooms';
   import WeeklyCalendar from '../weekly-calendar/WeeklyCalendar.svelte';
   import { REFETCH_DATA_INTERVAL_MS } from '../../constants/intervals';
-  import type { IRoomReservations } from '../../models/interfaces';
+  import type { IRoom, IRoomReservations } from '../../models/interfaces';
   import { fetchRoom, fetchRooms } from '../../utils';
   import LoadingSpinner from '../loading-spinner/LoadingSpinner.svelte';
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const roomQuery = urlParams.get('room');
-  const room = ROOMS.find((r) => r.hash === roomQuery);
-
   export let currentDate: Date;
+  export let room: IRoom | null;
 
   let loading = true;
   let error = false;
