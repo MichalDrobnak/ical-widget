@@ -14,7 +14,7 @@
   $: classes = defaultClasses + (isCurrent ? ' bg-slate-100 font-medium' : '');
 </script>
 
-<tr class="h-10">
+<tr class="h-8">
   <td class={classes}>{formatDate(reservation.start)}</td>
   <td class={classes}>{formatDate(reservation.end)}</td>
   <td class={classes}>{reservation.summary}</td>
