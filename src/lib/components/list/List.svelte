@@ -3,6 +3,7 @@
   import type { IRoom, IRoomReservations } from '../../models/interfaces';
   import { fetchRoom } from '../../utils';
   import DailyList from '../daily-list/DailyList.svelte';
+  import LoadingSpinner from '../loading-spinner/LoadingSpinner.svelte';
 
   export let currentDate: Date;
   export let room: IRoom;
@@ -39,4 +40,14 @@
   main();
 </script>
 
-<DailyList {currentDate} {roomReservations}></DailyList>
+<div class="h-full w-full flex items-center justify-center">
+  {#if loading}
+    <LoadingSpinner></LoadingSpinner>
+  {:else if error}
+    <p>Something went wrong</p>
+  {:else if room}
+    <DailyList {currentDate} {roomReservations}></DailyList>
+  {:else}
+    <p>No room selected</p>
+  {/if}
+</div>

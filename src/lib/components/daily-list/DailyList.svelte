@@ -4,7 +4,6 @@
     format,
     startOfDay,
     type Interval,
-    isWithinInterval,
     areIntervalsOverlapping,
   } from 'date-fns';
   import type {
@@ -12,6 +11,7 @@
     IRoomReservations,
   } from '../../models/interfaces';
   import HeaderCell from '../header-cell/HeaderCell.svelte';
+  import DailyRow from './DailyRow.svelte';
 
   export let currentDate = new Date();
   export let roomReservations: IRoomReservations;
@@ -38,14 +38,24 @@
 <table class="h-full w-full table-fixed border border-slate-800">
   <thead>
     <tr>
-      <HeaderCell align="left">{roomReservations.name}</HeaderCell>
-      <HeaderCell align="right">{formatDate(currentDate)}</HeaderCell>
+      <HeaderCell align="left" colspan={2}>{roomReservations.name}</HeaderCell>
+      <HeaderCell align="right" colspan={1}
+        >{formatDate(currentDate)}</HeaderCell>
     </tr>
     <tr>
-      <HeaderCell>Čas</HeaderCell>
+      <HeaderCell>Začátek</HeaderCell>
+      <HeaderCell>Konec</HeaderCell>
       <HeaderCell>Popis</HeaderCell>
     </tr>
   </thead>
 
-  <tbody> </tbody>
+  <tbody>
+    {#each reservations as reservation}
+      <DailyRow {reservation}></DailyRow>
+    {:else}
+      <tr>
+        <td colspan="3" class="text-center">Žádné rezervace</td>
+      </tr>
+    {/each}
+  </tbody>
 </table>
