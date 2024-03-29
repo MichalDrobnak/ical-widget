@@ -1,4 +1,5 @@
 <script lang="ts">
+  export let currentDate: Date;
 </script>
 
-<p>List view</p>
+<p>{currentDate}</p>
