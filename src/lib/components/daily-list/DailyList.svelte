@@ -63,13 +63,15 @@
       <tbody>
         {#each reservations as reservation}
           <DailyRow {reservation} isCurrent={isCurrent(reservation)}></DailyRow>
-        {:else}
-          <tr>
-            <td colspan="3" class="text-center">Žádné rezervace</td>
-          </tr>
         {/each}
       </tbody>
     </table>
+
+    {#if reservations.length === 0}
+      <div class="flex justify-center items-center h-full">
+        <p class="text-slate-600">Žádné rezervace na tento den</p>
+      </div>
+    {/if}
   </div>
 
   <div class="flex justify-between items-center p-2">
