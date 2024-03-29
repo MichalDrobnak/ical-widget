@@ -2,16 +2,17 @@
   import { REFETCH_DATA_INTERVAL_MS } from '../../constants';
   import type { IRoom, IRoomReservations } from '../../models/interfaces';
   import { fetchRoom } from '../../utils';
+  import DailyList from '../daily-list/DailyList.svelte';
 
   export let currentDate: Date;
   export let room: IRoom;
 
   let loading = true;
   let error = false;
-  let reservations: IRoomReservations;
+  let roomReservations: IRoomReservations;
 
   const fetchReservations = async (): Promise<void> => {
-    reservations = await fetchRoom(room!);
+    roomReservations = await fetchRoom(room!);
   };
 
   const fetchData = async (showLoading: boolean) => {
@@ -38,4 +39,4 @@
   main();
 </script>
 
-<p>{currentDate} - {room.name}</p>
+<DailyList {currentDate} {roomReservations}></DailyList>
