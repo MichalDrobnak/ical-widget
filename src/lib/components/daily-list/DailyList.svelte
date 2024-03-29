@@ -5,6 +5,7 @@
     startOfDay,
     type Interval,
     areIntervalsOverlapping,
+    isWithinInterval,
   } from 'date-fns';
   import type {
     IReservation,
@@ -35,6 +36,11 @@
       })
       .sort((a, b) => a.start.getTime() - b.start.getTime());
   };
+
+  const isCurrent = ({ start, end }: IReservation) => {
+    const reservationInterval: Interval = { start, end };
+    return isWithinInterval(currentDate, reservationInterval);
+  };
 </script>
 
 <div class="flex flex-col h-full w-full">
@@ -56,7 +62,7 @@
 
       <tbody>
         {#each reservations as reservation}
-          <DailyRow {reservation}></DailyRow>
+          <DailyRow {reservation} isCurrent={isCurrent(reservation)}></DailyRow>
         {:else}
           <tr>
             <td colspan="3" class="text-center">Žádné rezervace</td>
