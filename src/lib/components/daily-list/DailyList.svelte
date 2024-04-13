@@ -11,7 +11,6 @@
     IReservation,
     IRoomReservations,
   } from '../../models/interfaces';
-  import HeaderCell from '../header-cell/HeaderCell.svelte';
   import DailyRow from './DailyRow.svelte';
 
   export let currentDate = new Date();
@@ -43,39 +42,25 @@
   };
 </script>
 
-<div class="flex flex-col h-full w-full">
-  <div class="flex-grow w-full">
-    <table class="w-full table-fixed border border-slate-800">
-      <thead>
-        <tr>
-          <HeaderCell align="left" colspan={2}
-            >{roomReservations.name}</HeaderCell>
-          <HeaderCell align="right" colspan={1}
-            >{formatDate(currentDate)}</HeaderCell>
-        </tr>
-        <tr>
-          <HeaderCell>Začátek</HeaderCell>
-          <HeaderCell>Konec</HeaderCell>
-          <HeaderCell>Popis</HeaderCell>
-        </tr>
-      </thead>
+<div class="flex flex-col h-full w-full gap-3 p-4">
+  <h1 class="text-xl font-medium">
+    {roomReservations.name} - {formatDate(currentDate)}
+  </h1>
 
-      <tbody>
-        {#each reservations as reservation}
-          <DailyRow {reservation} isCurrent={isCurrent(reservation)}></DailyRow>
-        {/each}
-      </tbody>
-    </table>
+  {#each reservations as reservation}
+    <DailyRow {reservation} isCurrent={isCurrent(reservation)}></DailyRow>
+  {/each}
 
-    {#if reservations.length === 0}
-      <div class="flex justify-center items-center h-full">
-        <p class="text-slate-600">Žádné rezervace na tento den</p>
-      </div>
-    {/if}
-  </div>
+  {#if reservations.length === 0}
+    <div class="flex justify-center items-center h-full">
+      <p class="text-slate-600">Žádné rezervace na tento den</p>
+    </div>
+  {/if}
+
+  <div class="flex-grow"></div>
 
   <div class="flex justify-between items-center p-2">
     <img src="logo-cesnet-dark.png" alt="CESNET" width="150" height="57" />
-    <img src="qr.png" alt="CESNET Meetings QR" width="70" height="70" />
+    <img src="qr.png" alt="CESNET Meetings QR" width="100" height="100" />
   </div>
 </div>
