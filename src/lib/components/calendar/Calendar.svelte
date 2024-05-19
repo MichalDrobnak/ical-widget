@@ -2,21 +2,16 @@
   import HourlyCalendar from '../hourly-calendar/HourlyCalendar.svelte';
   import { ROOMS } from '../../constants/rooms';
   import WeeklyCalendar from '../weekly-calendar/WeeklyCalendar.svelte';
-  import {
-    CHECK_TIME_INTERVAL_MS,
-    REFETCH_DATA_INTERVAL_MS,
-  } from '../../constants/intervals';
-  import type { IRoomReservations } from '../../models/interfaces';
+  import { REFETCH_DATA_INTERVAL_MS } from '../../constants/intervals';
+  import type { IRoom, IRoomReservations } from '../../models/interfaces';
   import { fetchRoom, fetchRooms } from '../../utils';
   import LoadingSpinner from '../loading-spinner/LoadingSpinner.svelte';
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const roomQuery = urlParams.get('room');
-  const room = ROOMS.find((r) => r.hash === roomQuery);
+  export let currentDate: Date;
+  export let room: IRoom | null;
 
   let loading = true;
   let error = false;
-  let currentDate = new Date();
   let singleReservations: IRoomReservations;
   let allReservations: IRoomReservations[] = [];
 
@@ -48,11 +43,6 @@
 
     // Refetch data every 5 minutes
     setInterval(async () => fetchData(false), REFETCH_DATA_INTERVAL_MS);
-
-    // Check if the hour has changed
-    setInterval(() => {
-      currentDate = new Date();
-    }, CHECK_TIME_INTERVAL_MS);
   };
 
   main();
